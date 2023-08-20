@@ -12,23 +12,26 @@ class TodoController extends Controller
 {
 
     public readonly Model $model;
+
     public function __construct()
     {
         $this->model = new Todo();
     }
+
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        $fields = $request->except(['_method', '_token']);
-        $response = $this->model->create($fields);
+        try {
+            $fields = $request->except(['_method', '_token']);
 
-        if ($response) {
-            return json_encode(['message' => 'Criado com sucesso']);
+            $response = $this->model->create($fields);
+
+            return json_encode(['message' => 'Atualizado com sucesso', 'data' => $response]);
+        } catch (Throwable $e) {
+            return json_encode(['message' => $e->getMessage(), 'data' => null]);
         }
-
-        return json_encode(['message' => 'Erro ao tentar cadastrar']);
     }
 
 

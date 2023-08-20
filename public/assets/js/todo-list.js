@@ -1,13 +1,14 @@
-$(".todo-checkbox")
-    .change((e) => {
-        e = $(e.currentTarget);
-        updateBadges(e.parents(".todo-container"));
-        updateText(e.parents(".todo-row"));
-    })
-    .trigger("change");
+updateBadges($(".todo-container"));
+updateText($(".todo-list .todo-row"));
+
+$(document).on("change", ".todo-checkbox", (e) => {
+    updateBadges($(e.target).parents(".todo-container"));
+    updateText($(e.target).parents(".todo-row"));
+    updateDbOnCheck($(e.target));
+});
 
 function updateBadges(container) {
-    const checkboxes = container.find(".todo-checkbox");
+    const checkboxes = container.find(".todo-list .todo-checkbox");
 
     container.find(".todos-all").text(checkboxes.length);
     container
@@ -30,17 +31,13 @@ function updateText(row) {
     }
 }
 
-$(".todo-checkbox").change((e) => {
-    updateDbOnCheck($(e.currentTarget));
-});
-
-//!!! SEM TRIGGER
 /**
  * função é executada toda vez que um checkbox é marcado/desmarcado
  * **/
 async function updateDbOnCheck(e) {
-    response = await $.ajax({
-        url: e.parents(".todo-row").data("route"),
+    debugger;
+    const response = await $.ajax({
+        url: e.data("route"),
         method: "POST",
         data: {
             _token: $("#_token").val(),
@@ -54,16 +51,20 @@ async function updateDbOnCheck(e) {
             updateText(e.parents(".todo-row"));
             updateBadges(e.parents(".todo-container"));
         },
+        success: function (response) {
+            console.log(response);
+        },
     });
 }
 
-$(".todo-delete-btn").click((e) => {
-    destroyOnClick($(e.currentTarget).parents(".todo-row"));
+$(document).on("click", ".todo-delete-btn", (e) => {
+    debugger;
+    destroyOnClick($(e.currentTarget));
 });
 
-async function destroyOnClick(row) {
-    response = await $.ajax({
-        url: row.data("route"),
+async function destroyOnClick(btn) {
+    const response = await $.ajax({
+        url: btn.data("route"),
         method: "POST",
         data: {
             _token: $("#_token").val(),
@@ -75,9 +76,55 @@ async function destroyOnClick(row) {
         success: function (response) {
             console.log(response);
 
-            const container = row.parents(".todo-container");
-            row.remove();
+            const container = btn.parents(".todo-container");
+            btn.parents(".todo-row").remove();
             updateBadges(container);
         },
     });
+}
+
+$(".add-todo-btn").click((e) => {
+    console.log($(e.currentTarget));
+    insertNewTodo($(e.currentTarget));
+});
+
+async function insertNewTodo(btn) {
+    const response = await $.ajax({
+        url: btn.data("route"),
+        method: "POST",
+        data: {
+            _token: $("#_token").val(),
+            name: $("#todo-name-input").val(),
+        },
+        error: function (response) {
+            console.error(response);
+        },
+        success: function (response) {
+            response = JSON.parse(response);
+
+            dataToTodoRow(response.data);
+            $("#todo-name-input").val("");
+        },
+    });
+}
+
+function dataToTodoRow(data) {
+    const template = $(".todo-template .todo-row").clone();
+
+    debugger;
+    //altera as rotas do template
+    template.find("[data-route]").each((i, e) => {
+        debugger;
+        const newRoute = $(e).attr("data-route").slice(0, -1) + data.id;
+
+        $(e).attr("data-route", newRoute);
+    });
+
+    //atribui o nome
+    template.find(".todo-name").text(data.name);
+
+    //insere na lista
+    template.appendTo(".todo-list");
+
+    updateBadges(template.parents(".todo-container"));
 }
