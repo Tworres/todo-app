@@ -15,19 +15,19 @@
      * Template da linha da tarefa
      * */
     function todoRow($id = 0, $checked = false, $title = ''){ ?>
-    <div class="col-sm-12 mt-1 todo-row">
+    <div class="col-12 mt-1 todo-row">
         <div class="d-flex">
-            <div class="col-sm-1 d-flex justify-content-center align-items-center">
+            <div class="col-1 d-flex justify-content-center align-items-center">
                 <input type="checkbox" class="form-check-input m-0 todo-checkbox" style="width:16px; height:16px;"
                     {{ $checked ? 'checked' : '' }} data-route="{{ route('todo.update', ['todo' => $id]) }}">
             </div>
-            <div class="col-sm-10 d-flex align-items-center">
+            <div class="col-10 d-flex align-items-center">
                 <div class="fs-6 border-bottom text-truncate todo-name flex-grow-1"
                     title="{{ strlen($title) > 60 ? $title : '' }}">
                     {{ $title }}
                 </div>
             </div>
-            <div class="col-sm-1 d-flex justify-content-center align-items-center">
+            <div class="col-1 d-flex justify-content-center align-items-center">
                 <div style="transform: scale(0.5);">
                     <button class="btn btn-outline-danger todo-delete-btn" type="button"type="button"
                         data-route="{{ route('todo.destroy', ['todo' => $id]) }}">
@@ -52,7 +52,7 @@
                 </div>
                 <h4 class="page-header mb-1 text-body-secondary">Tarefas</h4>
             </div>
-            <div class="col-sm-12 p-2 rounded shadow" style="background-color: #f5f5f5">
+            <div class="col-12 p-2 rounded shadow" style="background-color: #f5f5f5">
                 <div style="position: relative"></div>
                 <div class="todo-template" style="display: none"> {{-- UTILIZADO PELO JS PARA CAPTURAR A FORMTAÇÃO DA LINHA --}}
                     @php
@@ -67,15 +67,15 @@
                     @endforeach
                 </div>
                 <div class="add-todo">
-                    <div class="col-sm-12 mt-1">
+                    <div class="col-12 mt-1">
                         <div class="d-flex">
-                            <div class="col-sm-1  d-flex justify-content-center align-items-center">
+                            <div class="col-1  d-flex justify-content-center align-items-center">
                             </div>
-                            <div class="col-sm-10">
+                            <div class="col-10">
                                 <input type="text"class=" w-100 h-100 form-control form-control-sm" maxlength="60"
                                     placeholder="Adicionar Tarefa" name="name" id="todo-name-input">
                             </div>
-                            <div class="col-sm-1  d-flex justify-content-center align-items-center">
+                            <div class="col-1  d-flex justify-content-center align-items-center">
                                 <div style="transform: scale(0.5)">
                                     <button class="btn btn-success add-todo-btn" type="button"
                                         data-route={{ route('todo.store') }}>
