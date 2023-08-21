@@ -13,9 +13,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!file_exists('../db.sqlite')) {
-            mkdir('../db.sqlite');
-        }
         Schema::create('todos', function (Blueprint $table) {
             $table->id();
             $table->string('name');
