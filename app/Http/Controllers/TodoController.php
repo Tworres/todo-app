@@ -19,7 +19,10 @@ class TodoController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Guarda uma tarefa no banco de dados
+     * 
+     * @param Request $request
+     * @return string
      */
     public function store(Request $request)
     {
@@ -36,7 +39,11 @@ class TodoController extends Controller
 
 
     /**
-     * Update the specified resource in storage.
+     * Atualiza uma tarefa no banco de dados
+     * 
+     * @param Request $request
+     * @param string $id
+     * @return string
      */
     public function update(Request $request, string $id)
     {
@@ -54,7 +61,10 @@ class TodoController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * remove uma tarefa no banco de dados
+     * 
+     * @param string $id
+     * @return string
      */
     public function destroy(string $id)
     {
