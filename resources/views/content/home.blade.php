@@ -43,13 +43,17 @@
         <div class="todo-container">
             <div class="page-header container">
                 <div class="float-end">
-                    <span class="badge rounded-circle bg-primary todos-all"></span>
-                    <span class="badge rounded-circle bg-warning todos-pending"></span>
-                    <span class="badge rounded-circle bg-success todos-conclude"></span>
+                    <span class="badge rounded-circle bg-primary todos-all" data-toggle="tooltip" data-placement="bottom"
+                        title="Total de tarefas"></span>
+                    <span class="badge rounded-circle bg-warning todos-pending" data-toggle="tooltip"
+                        data-placement="bottom" title="Tarefas pendentes"></span>
+                    <span class="badge rounded-circle bg-success todos-conclude" data-toggle="tooltip"
+                        data-placement="bottom" title="Tarefas concluidas"></span>
                 </div>
                 <h4 class="page-header mb-1 text-body-secondary">Tarefas</h4>
             </div>
             <div class="col-sm-12 p-2 rounded shadow" style="background-color: #f5f5f5">
+                <div style="position: relative"></div>
                 <div class="todo-template" style="display: none"> {{-- UTILIZADO PELO JS PARA CAPTURAR A FORMTAÇÃO DA LINHA --}}
                     @php
                         todoRow();

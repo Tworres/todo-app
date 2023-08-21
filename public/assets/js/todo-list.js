@@ -1,5 +1,7 @@
 updateBadges($(".todo-container"));
-updateText($(".todo-list .todo-row"));
+$(".todo-list .todo-row").each((i, e) => {
+    updateText($(e));
+});
 
 $(document).on("change", ".todo-checkbox", (e) => {
     updateBadges($(e.target).parents(".todo-container"));
@@ -7,6 +9,11 @@ $(document).on("change", ".todo-checkbox", (e) => {
     updateDbOnCheck($(e.target));
 });
 
+/**
+ * Atualiza os números de identificação no topo da lista
+ *
+ * @param {object} container
+ * **/
 function updateBadges(container) {
     const checkboxes = container.find(".todo-list .todo-checkbox");
 
@@ -19,6 +26,11 @@ function updateBadges(container) {
         .text(checkboxes.filter(":checked").length);
 }
 
+/**
+ * Atualiza o texto da linha baseado no status do checkbox
+ *
+ * @param {object} row
+ * **/
 function updateText(row) {
     const todoTitle = row.find(".todo-name");
 
@@ -32,10 +44,11 @@ function updateText(row) {
 }
 
 /**
- * função é executada toda vez que um checkbox é marcado/desmarcado
+ * Atualiza o banco de dados baseado no checkbox
+ *
+ * @param {object} e
  * **/
 async function updateDbOnCheck(e) {
-    debugger;
     const response = await $.ajax({
         url: e.data("route"),
         method: "POST",
@@ -51,17 +64,18 @@ async function updateDbOnCheck(e) {
             updateText(e.parents(".todo-row"));
             updateBadges(e.parents(".todo-container"));
         },
-        success: function (response) {
-            console.log(response);
-        },
     });
 }
 
 $(document).on("click", ".todo-delete-btn", (e) => {
-    debugger;
     destroyOnClick($(e.currentTarget));
 });
 
+/**
+ * Remove uma linha de tarefa no banco e na lista
+ *
+ * @param {object} btn
+ * **/
 async function destroyOnClick(btn) {
     const response = await $.ajax({
         url: btn.data("route"),
@@ -74,8 +88,6 @@ async function destroyOnClick(btn) {
             console.error(response);
         },
         success: function (response) {
-            console.log(response);
-
             const container = btn.parents(".todo-container");
             btn.parents(".todo-row").remove();
             updateBadges(container);
@@ -84,10 +96,16 @@ async function destroyOnClick(btn) {
 }
 
 $(".add-todo-btn").click((e) => {
-    console.log($(e.currentTarget));
-    insertNewTodo($(e.currentTarget));
+    if ($("#todo-name-input").val()) {
+        insertNewTodo($(e.currentTarget));
+    }
 });
 
+/**
+ * Insere uma nova tarefa no banco
+ *
+ * @param {object} btn
+ * **/
 async function insertNewTodo(btn) {
     const response = await $.ajax({
         url: btn.data("route"),
@@ -108,13 +126,16 @@ async function insertNewTodo(btn) {
     });
 }
 
+/**
+ * cria uma nova tarefa usando dados e o template disponibilizado em .todo-template
+ *
+ * @param {object} data
+ * **/
 function dataToTodoRow(data) {
     const template = $(".todo-template .todo-row").clone();
 
-    debugger;
     //altera as rotas do template
     template.find("[data-route]").each((i, e) => {
-        debugger;
         const newRoute = $(e).attr("data-route").slice(0, -1) + data.id;
 
         $(e).attr("data-route", newRoute);
