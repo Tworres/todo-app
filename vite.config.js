@@ -13,6 +13,7 @@ export default defineConfig({
     resolve: {
         alias: {
             "@cmp": "/resources/js/components",
+            "@srv": "/resources/js/services",
             vue: "vue/dist/vue.esm-bundler.js",
         },
     },

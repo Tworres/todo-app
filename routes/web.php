@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, "index"])->name('home.name');
 
+Route::get('/todo', [TodoController::class, "get"])->name('todo.store');
 Route::post('/todo', [TodoController::class, "store"])->name('todo.store');
 Route::put('/todo/{todo}', [TodoController::class, "update"])->name('todo.update');
 Route::delete('/todo/{todo}', [TodoController::class, "destroy"])->name('todo.destroy');

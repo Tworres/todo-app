@@ -18,6 +18,17 @@ class TodoController extends Controller
         $this->model = new Todo();
     }
 
+    public function get()
+    {
+        try {
+            $response = $this->model->all();
+
+            return json_encode(['message' => 'Requisitado com sucesso', 'data' => $response]);
+        } catch (Throwable $e) {
+            return json_encode(['message' => $e->getMessage(), 'data' => null]);
+        }
+    }
+
     /**
      * Guarda uma tarefa no banco de dados
      * 
@@ -31,7 +42,7 @@ class TodoController extends Controller
 
             $response = $this->model->create($fields);
 
-            return json_encode(['message' => 'Atualizado com sucesso', 'data' => $response]);
+            return json_encode(['message' => 'Armazenado com sucesso', 'data' => $response]);
         } catch (Throwable $e) {
             return json_encode(['message' => $e->getMessage(), 'data' => null]);
         }
