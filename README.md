@@ -8,6 +8,7 @@
         <code>Would you like to create it? (yes/no) [no] </code>
     <br>Digite "Yes" e prossiga</li>
     <li>Rodar <code>$ php artisan db:seed</code></li>
+    <li>Rodar <code>$ npm run dev</code></li>
     <li>E por fim rodar <code>$ php artisan serve</code></li>
 </uL>
 
