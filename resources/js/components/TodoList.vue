@@ -100,9 +100,7 @@ async function store() {
                 <div class="todo-list">
                     <div v-for="todo in todos" class="col-12 mt-1 todo-row">
                         <div class="d-flex">
-                            <div
-                                class="col-1 d-flex justify-content-center align-items-center"
-                            >
+                            <div class="col-1 d-flex justify-content-center align-items-center">
                                 <input
                                     type="checkbox"
                                     class="form-check-input m-0"
@@ -114,16 +112,8 @@ async function store() {
                                 />
                             </div>
                             <div class="col-10 d-flex align-items-center">
-                                <div
-                                    class="fs-6 border-bottom text-truncate todo-name flex-grow-1"
-                                >
-                                    <span
-                                        :class="
-                                            todo.completed
-                                                ? 'text-decoration-line-through'
-                                                : ''
-                                        "
-                                    >
+                                <div class="fs-6 border-bottom text-truncate todo-name flex-grow-1" >
+                                    <span :class="todo.completed? 'text-decoration-line-through': ''">
                                         {{ todo.name }}
                                     </span>
                                 </div>
@@ -148,9 +138,7 @@ async function store() {
                 <div class="add-todo">
                     <div class="col-12 mt-1">
                         <div class="d-flex">
-                            <div
-                                class="col-1 d-flex justify-content-center align-items-center"
-                            ></div>
+                            <div class="col-1 d-flex justify-content-center align-items-center"></div>
                             <div class="col-10">
                                 <input
                                     type="text"
@@ -161,9 +149,7 @@ async function store() {
                                     v-model="newTodo"
                                 />
                             </div>
-                            <div
-                                class="col-1 d-flex justify-content-center align-items-center"
-                            >
+                            <div class="col-1 d-flex justify-content-center align-items-center">
                                 <div style="transform: scale(0.5)">
                                     <button
                                         class="btn btn-success add-todo-btn"
